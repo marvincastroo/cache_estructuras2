@@ -59,7 +59,7 @@ def tagBlockBits(cache):
 
 
 
-def processTrace(cache, data, address_bits):
+def processTrace(cache, data, address_bits, way_size):
     # creación de máscaras para obtener tag, index y block offset dada la dirección
 
     block_offset_bits, index_bits, tag_bits = int(address_bits[0]), int(address_bits[1]), int(address_bits[2])
@@ -69,10 +69,11 @@ def processTrace(cache, data, address_bits):
 
     i = 0
     with open('trace.out', 'r') as file:
+        queue_LRU = []
         for line in file:
             i = i + 1
             #print(i)
-            if (i < 5):
+            if (i < 10e38):
                 print(line)
                 line_splitted = line.split()
                 instruction_type = int(line_splitted[1])  # tipo de instrucción: 0 = load, 1 = store
@@ -88,6 +89,41 @@ def processTrace(cache, data, address_bits):
                 print("index: ", hex(index_number))
                 print("tag: ", hex(tag_number))
 
+                # empezar a llenar el cache
+                # 1. revisar que haya espacio, si no hay espacio, ir al otro way
+                way_iterador = 0
+                parar = False
+
+                while not parar:
+                    if (cache[index_number - 1][way_iterador*block_number : ((way_iterador + 1) * block_number) - 1 ].all() == 0):
+                        cache[index_number - 1][way_iterador*block_number: ((way_iterador + 1) * block_number) - 1] = 1
+                        queue_LRU.append((index_number, way_iterador))  # se añade el elemento a la lista de LRU para el reemplazo
+                        print(f"linea puesta en {index_number}, way: {way_iterador}")
+                        parar = True
+                    else:
+                        way_iterador = way_iterador + 1
+                        # si iteramos en todos los ways y no hay espacio, hay que reemplazar
+                        # reemplazamos el primer elemento de la lista queue_LRU, y luego lo borramos de la lista
+                        if way_iterador >= way_size:
+                            parar = True
+                            way_iterador = 0
+
+                            cache[(queue_LRU[0])[0] - 1][(queue_LRU[0])[0] * block_number: (((queue_LRU[0])[1] + 1) * block_number) - 1] = 1
+                            print(f"linea puesta en {(queue_LRU[0])[0]}, way: {(queue_LRU[0])[1]}")
+                            queue_LRU.append(((queue_LRU[0])[0], (queue_LRU[0])[1]))
+                            queue_LRU.pop(0)
+
+                            print("Nos pasamos del way, hay que reemplazar")
+
+                print(queue_LRU)
+                print((queue_LRU[0])[0])
+
+
+
+
+
+
+
 
     return
 
@@ -97,5 +133,7 @@ if __name__ == '__main__':
     data = 32, 256, 4, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
-    processTrace(cache, data, address_bits)
+    way_size = 4
+    processTrace(cache, data, address_bits, way_size)
+    print(np.shape(cache))
     #print(data)

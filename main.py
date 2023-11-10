@@ -35,7 +35,7 @@ def processTrace(cache, data, address_bits, way_size):
     mask_tag_bits     = ((1 << tag_bits) - 1) << (block_offset_bits + index_bits)
 
     i = 0
-    with open('test.out', 'r') as file:
+    with open('trace.out', 'r') as file:
         with open("logfile.txt", "w") as logfile:
             queue_LRU = []                  # Lista que guarda los primeros elementos, para el reemplazo de LRU
             for line in file:
@@ -56,10 +56,12 @@ def processTrace(cache, data, address_bits, way_size):
                     block_number = (address_value & mask_block_offset)
                     index_number = (address_value & mask_index_bits) >> block_offset_bits
                     tag_number = (address_value & mask_tag_bits) >> (block_offset_bits + index_bits)
-                    print(f"address_value: {address_hex}")
-                    print(f"tag: {tag_number}")
-                    print(f"index: {index_number}")
-                    print(f"block: {block_number}")
+
+                    # print(f"address_value: {address_hex}")
+                    # print(f"tag: {tag_number}")
+                    # print(f"index: {index_number}")
+                    # print(f"block: {block_number}")
+
                     #print("block: ", hex(block_number))
                     #print("index: ", hex(index_number))
                     #print("tag: ", hex(tag_number))
@@ -69,7 +71,7 @@ def processTrace(cache, data, address_bits, way_size):
                     # 2. si no existe y hay espacio en la cache, se mete la linea
                     # 3. si no existe y no hay espacio, se reemplaza
                     way_iterador = 0                # recore los ways ascendentemente
-                    way_iterador_tag = 0
+
                     parar = False
                     parar1 = False
 
@@ -78,7 +80,7 @@ def processTrace(cache, data, address_bits, way_size):
                         if (cache[index_number][way_iterador*linea ]) == tag_number:
                             parar = True
                             parar1 = True
-                            print("Encontrado, hit")
+                            #print("Encontrado, hit")
                         else:
                             way_iterador = way_iterador + 1
                             if way_iterador >= way_size:
@@ -87,8 +89,7 @@ def processTrace(cache, data, address_bits, way_size):
                     way_iterador = 0
                     while not parar:
 
-                        # si linea de cache esta vacia
-                        #
+                        # se comprobo que el elemento no existe en el cache, por lo tanto hay que escribirlo
                         if cache[index_number][way_iterador*linea + 1 : ((way_iterador + 1) * linea) - 1 ].all() == 0:
                             cache[index_number][way_iterador*linea] = tag_number        # se escribe tag en cache
                             cache[index_number][way_iterador*linea + 1: ((way_iterador + 1) * linea) - 1] = 1   # se escribe 1 en toda la linea
@@ -103,13 +104,15 @@ def processTrace(cache, data, address_bits, way_size):
                             if way_iterador >= way_size:
                                 parar = True
                                 way_iterador = 0
-                                # reemplazo con la dirección dada por el primer elemento de queue_LRU
-                                cache[(queue_LRU[0])[0]][(queue_LRU[0])[1] * linea] = tag_number
-                                # cache[5][0 * 32 + 1 : ((0 + 1)*32 ) - 1] = cache[5][1 : 31]
-                                cache[(queue_LRU[0])[0]][(queue_LRU[0])[1] * linea + 1: (((queue_LRU[0])[1] + 1) * block_number) - 1] = 1
+                                # reemplazo con el primer elemento con el index respectivo en queue_LRU
+                                lru_index = [y[0] for y in queue_LRU].index(index_number)
+
+                                cache[(queue_LRU[lru_index])[0]][(queue_LRU[lru_index])[1] * linea] = tag_number
+                                # cache[0][0 * 32 + 1 : ((0 + 1)*32 ) - 1] = cache[5][1 : 31]
+                                cache[(queue_LRU[lru_index])[0]][(queue_LRU[lru_index])[1] * linea + 1: (((queue_LRU[lru_index])[1] + 1) * linea) - 1] = 1
                                 #print(f"linea puesta en {(queue_LRU[0])[0]}, way: {(queue_LRU[0])[1]}")
-                                queue_LRU.append(((queue_LRU[0])[0], (queue_LRU[0])[1]))    # pongo nueva escritura al final
-                                queue_LRU.pop(0)                                            # borro primer elemento
+                                queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
+                                queue_LRU.pop(lru_index)                                            # borro primer elemento
 
 
 
@@ -135,6 +138,7 @@ def processTrace(cache, data, address_bits, way_size):
 if __name__ == '__main__':
     #especificaciones_cache = getValues()
     data = 32, 256, 4, 32768
+    #data = 64, 128, 16, 131072
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4

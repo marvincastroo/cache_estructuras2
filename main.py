@@ -38,12 +38,16 @@ def processTrace(cache, data, address_bits, way_size):
     with open('trace.out', 'r') as file:
         with open("logfile.txt", "w") as logfile:
             queue_LRU = []                  # Lista que guarda los primeros elementos, para el reemplazo de LRU
+            misses = 0                      # Variable que guarda la cantidad de misses
+            hits = 0                        # Variable que guarda la cantidad de hits
+            reemplazos = 0                  # Variable que guarda la cantidad de reemplazos
+            
             for line in file:
                 i = i + 1
                 #print(i)
                 if (i % 500000 == 0):
                     print(f"Counter: {i}")
-                if (i < 10e38):
+                if (i < 6):
                     #print(line)
                     line_splitted = line.split()
                     instruction_type = int(line_splitted[1])  # tipo de instrucción: 0 = load, 1 = store
@@ -80,12 +84,15 @@ def processTrace(cache, data, address_bits, way_size):
                         if (cache[index_number][way_iterador*linea ]) == tag_number:
                             parar = True
                             parar1 = True
-                            #print("Encontrado, hit")
+                            hit = 1
                         else:
                             way_iterador = way_iterador + 1
                             if way_iterador >= way_size:
                                 parar1 = True
-
+                            hit = 0
+                    hits += (instruction_quant - 1) + hit
+                    if(hit == 0):
+                        misses += 1
                     way_iterador = 0
                     while not parar:
 
@@ -113,12 +120,13 @@ def processTrace(cache, data, address_bits, way_size):
                                 #print(f"linea puesta en {(queue_LRU[0])[0]}, way: {(queue_LRU[0])[1]}")
                                 queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
                                 queue_LRU.pop(lru_index)                                            # borro primer elemento
+                                reemplazos += 1
 
 
 
                 #print(queue_LRU)
                 #print((queue_LRU[0])[0])
-
+            HMR = [hits, misses, reemplazos]
             for row1 in cache:
                 # Convert each element to a string and join them with a space
                 row_str = ' '.join(map(str, row1))
@@ -132,7 +140,7 @@ def processTrace(cache, data, address_bits, way_size):
 
 
 
-    return
+    return HMR
 
 
 if __name__ == '__main__':
@@ -142,6 +150,9 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    processTrace(cache,data, address_bits, way_size)
+    HMR = processTrace(cache,data, address_bits, way_size)
+    print("Se tuvieron ", HMR[0], "hits")
+    print("Se tuvieron ", HMR[1], "misses")
+    print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
     #print(data)

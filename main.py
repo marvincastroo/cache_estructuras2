@@ -25,7 +25,7 @@ def tagBlockBits(cache):
 # Función principal que se encarga de leer el trace e ir escribiendo las direcciones en el cache
 # Recibe: matriz del cache, información de la cantidad de bits para direccion, y tamaño del way
 # Retorna: cache escrita, archivo logfile
-def processTrace(cache, data, address_bits, way_size):
+def processTrace(cache, data, address_bits, way_size, optimization=False):
 
     linea, index, ways, cache_size = data
     # creación de máscaras para obtener tag, index y block offset dada la dirección
@@ -35,6 +35,7 @@ def processTrace(cache, data, address_bits, way_size):
     mask_tag_bits     = ((1 << tag_bits) - 1) << (block_offset_bits + index_bits)
 
     i = 0
+    way_predictor = 0
     with open('trace.out', 'r') as file:
         with open("logfile.txt", "w") as logfile:
             queue_LRU = []                  # Lista que guarda los primeros elementos, para el reemplazo de LRU
@@ -74,26 +75,58 @@ def processTrace(cache, data, address_bits, way_size):
                     # 1. revisar que el elemento exista en algun way, viendo tag e index
                     # 2. si no existe y hay espacio en la cache, se mete la linea
                     # 3. si no existe y no hay espacio, se reemplaza
-                    way_iterador = 0                # recore los ways ascendentemente
-
+                    way_iterador = 0                # recorre los ways ascendentemente
+                    
                     parar = False
                     parar1 = False
-
-                    # Ciclo while para verificar si ya existe el elemento
-                    while not parar1:
-                        if (cache[index_number][way_iterador*linea ]) == tag_number:
-                            parar = True
-                            parar1 = True
-                            hit = 1
-                        else:
-                            way_iterador = way_iterador + 1
-                            if way_iterador >= way_size:
+                    parar2 = False
+                    if optimization == False:
+                        # Ciclo while para verificar si ya existe el elemento
+                        while not parar1:
+                            if (cache[index_number][way_iterador*linea ]) == tag_number:
+                                parar = True
                                 parar1 = True
-                            hit = 0
-                    hits += (instruction_quant - 1) + hit
-                    if(hit == 0):
-                        misses += 1
-                    way_iterador = 0
+                                hit = 1
+                            else:
+                                way_iterador = way_iterador + 1
+                                if way_iterador >= way_size:
+                                    parar1 = True
+                                hit = 0
+                        hits += (instruction_quant - 1) + hit
+                        if(hit == 0):
+                            misses += 1
+                        way_iterador = 0
+                    else: 
+                        # Ciclo while para verificar si existe el elemento, utilizando la optimización avanzada
+                        while not parar1:
+                            if (cache[index_number][way_predictor*linea ]) == tag_number:
+                                parar = True
+                                parar1 = True
+                                hit = 1
+                            else:
+                                misses += 1
+                                way_predictor = 0
+                                while not parar2:
+                                    if (cache[index_number][way_predictor*linea ]) == tag_number:
+                                        parar = True
+                                        parar1 = True
+                                        parar2 = True
+                                        hit = 1
+                                    else:
+                                        way_predictor = way_predictor + 1
+                                        if way_predictor >= way_size:
+                                            parar1 = True
+                                            parar2 = True
+                                            way_predictor = way_predictor=-1
+                                        hit = 0
+                                        
+                                hits += (instruction_quant - 1) + hit
+                                if(hit == 0):
+                                    misses += 1
+                            way_iterador = way_predictor
+                
+                                
+                                
                     while not parar:
 
                         # se comprobo que el elemento no existe en el cache, por lo tanto hay que escribirlo
@@ -150,7 +183,7 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    HMR = processTrace(cache,data, address_bits, way_size)
+    HMR = processTrace(cache,data, address_bits, way_size, True)
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")

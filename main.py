@@ -104,7 +104,6 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 parar1 = True
                                 hit = 1
                             else:
-                                misses += 1
                                 way_predictor = 0
                                 while not parar2:
                                     if (cache[index_number][way_predictor*linea ]) == tag_number:
@@ -119,14 +118,10 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                             parar2 = True
                                             way_predictor = way_predictor=-1
                                         hit = 0
-                                        
-                                hits += (instruction_quant - 1) + hit
-                                if(hit == 0):
-                                    misses += 1
-                            way_iterador = way_predictor
-                
-                                
-                                
+                            hits += (instruction_quant - 1) + hit
+                            if(hit == 0):
+                                misses += 1
+                            way_iterador = way_predictor                               
                     while not parar:
 
                         # se comprobo que el elemento no existe en el cache, por lo tanto hay que escribirlo
@@ -136,7 +131,6 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                             queue_LRU.append((index_number, way_iterador))  # se añade el elemento a la lista de LRU para el reemplazo
                             #print(f"linea puesta en {index_number}, way: {way_iterador}")
                             parar = True
-
                         else:
                             way_iterador = way_iterador + 1
                             # si iteramos en todos los ways y no hay espacio, hay que reemplazar

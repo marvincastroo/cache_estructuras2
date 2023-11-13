@@ -48,7 +48,7 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                 #print(i)
                 if (i % 500000 == 0):
                     print(f"Counter: {i}")
-                if (i < 10e38):
+                if (i < 10000):
                     #print(line)
                     line_splitted = line.split()
                     instruction_type = int(line_splitted[1])  # tipo de instrucción: 0 = load, 1 = store
@@ -87,6 +87,9 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 parar = True
                                 parar1 = True
                                 hit = 1
+                                lru_index = [y[0] for y in queue_LRU].index(index_number)
+                                queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
+                                queue_LRU.pop(lru_index)                                            # borro primer elemento
                             else:
                                 way_iterador = way_iterador + 1
                                 if way_iterador >= way_size:
@@ -103,6 +106,9 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 parar = True
                                 parar1 = True
                                 hit = 1
+                                lru_index = [y[0] for y in queue_LRU].index(index_number)
+                                queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
+                                queue_LRU.pop(lru_index)                                            # borro primer elemento
                             else:
                                 way_predictor = 0
                                 while not parar2:
@@ -111,6 +117,9 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                         parar1 = True
                                         parar2 = True
                                         hit = 1
+                                        lru_index = [y[0] for y in queue_LRU].index(index_number)
+                                        queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
+                                        queue_LRU.pop(lru_index)                                            # borro primer elemento
                                     else:
                                         way_predictor = way_predictor + 1
                                         if way_predictor >= way_size:

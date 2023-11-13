@@ -1,5 +1,5 @@
 import numpy as np
-
+import time
 
 # Funcion que construye la matriz que representan el cache de tamaño (index, linea cache*numero ways)
 # Recibe: tuple "data" con la información de tamaño de linea, index, numero de ways y tamaño de cache
@@ -26,7 +26,7 @@ def tagBlockBits(cache):
 # Recibe: matriz del cache, información de la cantidad de bits para direccion, y tamaño del way
 # Retorna: cache escrita, archivo logfile
 def processTrace(cache, data, address_bits, way_size, optimization=False):
-
+    initial_time = time.time()
     linea, index, ways, cache_size = data
     # creación de máscaras para obtener tag, index y block offset dada la dirección
     block_offset_bits, index_bits, tag_bits = int(address_bits[0]), int(address_bits[1]), int(address_bits[2])
@@ -160,29 +160,32 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
 
                 # Write the row to the file followed by a newline
                 logfile.write(row_str + '\n')
+    final_time = time.time()
+    total_time = final_time - initial_time
 
 
 
 
 
 
-
-    return HMR
+    return HMR, total_time
 
 
 if __name__ == '__main__':
-    #especificaciones_cache = getValues()
-    data = 32, 256, 4, 32768
-    #data = 64, 128, 16, 131072
-    cache = buildCache(data)
-    address_bits = tagBlockBits(data)
-    way_size = 4
-    HMR = processTrace(cache,data, address_bits, way_size, True)
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
-    print(np.shape(cache))
-    #print(data)
+    # #especificaciones_cache = getValues()
+    # data = 32, 256, 4, 32768
+    # #data = 64, 128, 16, 131072
+    # cache = buildCache(data)
+    # address_bits = tagBlockBits(data)
+    # way_size = 4
+    # HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    # print("Se tuvieron ", HMR[0], "hits")
+    # print("Se tuvieron ", HMR[1], "misses")
+    # print("Se tuvieron ", HMR[2], "reemplazos")
+    # print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    # print(np.shape(cache))
+    
+    # #print(data)
 
 
 # A continuación se muestra el análisis comparativo.
@@ -196,36 +199,40 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    
     print("Con optimización - Tamaño 32:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Tamaño 64
     data = 64, 64, 16, 65536
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Tamaño 64:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Tamaño 128KB
     data = 128000, 64, 16, 131072000
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Tamaño 128KB:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -234,36 +241,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 32:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Tamaño 64
     data = 64, 64, 16, 65536
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 64:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Tamaño 128KB
     data = 128000, 64, 16, 131072000
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 128KB:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
 # Prueba 2. Tamaño 32KB, línea de cache 64 bytes. Barrido de asociatividad: 4, 8, 16.
     print("Prueba 2. Tamaño 32KB, línea de cache 64 bytes. Barrido de asociatividad: 4, 8, 16.")
@@ -274,36 +284,40 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    
     print("Con optimización - Way 4:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Way 8
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Way 8:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Way 16
     data = 32768, 64, 16, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Way 16:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -312,36 +326,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 4:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Way 8
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 8:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Way 16
     data = 32768, 64, 16, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 16:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
 # Prueba 3. Tamaño 32KB, asociatividad 8 ways. Barrido de línea de cache: 32, 64 y 128 bytes
     print("Prueba 3. Tamaño 32KB, asociatividad 8 ways. Barrido de línea de cache: 32, 64 y 128 bytes.")
@@ -353,36 +370,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 32:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Linea de cache 64
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 64:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Linea de cache 128
     data = 32768, 128, 8, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, True)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 128:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -391,34 +411,36 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 32:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Linea de cache 64
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 64:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
 
     #Linea de cache 128
     data = 32768, 128, 8, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR = processTrace(cache,data, address_bits, way_size, False)
+    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 128:")
     print("Se tuvieron ", HMR[0], "hits")
     print("Se tuvieron ", HMR[1], "misses")
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
-    
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))

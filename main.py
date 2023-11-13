@@ -94,7 +94,7 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 way_iterador = way_iterador + 1
                                 if way_iterador >= way_size:
                                     parar1 = True
-                                hit = 0
+                                    hit = 0
                         hits += (instruction_quant - 1) + hit
                         if(hit == 0):
                             misses += 1
@@ -108,7 +108,7 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 hit = 1
                                 lru_index = [y[0] for y in queue_LRU].index(index_number)
                                 queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
-                                queue_LRU.pop(lru_index)                                            # borro primer elemento
+                                queue_LRU.pop(lru_index)   
                             else:
                                 way_predictor = 0
                                 while not parar2:
@@ -119,18 +119,18 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                         hit = 1
                                         lru_index = [y[0] for y in queue_LRU].index(index_number)
                                         queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
-                                        queue_LRU.pop(lru_index)                                            # borro primer elemento
+                                        queue_LRU.pop(lru_index)   
                                     else:
                                         way_predictor = way_predictor + 1
                                         if way_predictor >= way_size:
                                             parar1 = True
                                             parar2 = True
-                                            way_predictor = way_predictor=-1
-                                        hit = 0
-                            hits += (instruction_quant - 1) + hit
-                            if(hit == 0):
-                                misses += 1
-                            way_iterador = way_predictor                               
+                                            hit = 0
+                                            way_iterador = way_predictor = 0
+                        hits += (instruction_quant - 1) + hit
+                        if(hit == 0):
+                            misses += 1
+                               
                     while not parar:
 
                         # se comprobo que el elemento no existe en el cache, por lo tanto hay que escribirlo
@@ -140,6 +140,8 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                             queue_LRU.append((index_number, way_iterador))  # se añade el elemento a la lista de LRU para el reemplazo
                             #print(f"linea puesta en {index_number}, way: {way_iterador}")
                             parar = True
+                            if optimization == True:
+                                way_predictor = way_iterador
                         else:
                             way_iterador = way_iterador + 1
                             # si iteramos en todos los ways y no hay espacio, hay que reemplazar
@@ -157,6 +159,8 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                 queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
                                 queue_LRU.pop(lru_index)                                            # borro primer elemento
                                 reemplazos += 1
+                                if optimization == True:
+                                    way_predictor = (queue_LRU[lru_index])[1]
 
 
 
@@ -453,3 +457,4 @@ if __name__ == '__main__':
     print("Se tuvieron ", HMR[2], "reemplazos")
     print(np.shape(cache))
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    

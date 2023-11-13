@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import time
 
@@ -212,40 +213,40 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_1_1_32, total_time_funct_1_1_32 = processTrace(cache,data, address_bits, way_size, True)
     
     print("Con optimización - Tamaño 32:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_1_32[0], "hits")
+    print("Se tuvieron ", HMR_1_1_32[1], "misses")
+    print("Se tuvieron ", HMR_1_1_32[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_1_32))
 
     #Tamaño 64
     data = 64, 64, 16, 65536
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_1_1_64, total_time_funct_1_1_64 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Tamaño 64:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_1_64[0], "hits")
+    print("Se tuvieron ", HMR_1_1_64[1], "misses")
+    print("Se tuvieron ", HMR_1_1_64[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_1_64))
 
     #Tamaño 128KB
     data = 128000, 64, 16, 131072000
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_1_1_128, total_time_funct_1_1_128 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Tamaño 128KB:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_1_128[0], "hits")
+    print("Se tuvieron ", HMR_1_1_128[1], "misses")
+    print("Se tuvieron ", HMR_1_1_128[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_1_128))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -254,39 +255,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_1_0_32, total_time_funct_1_0_32 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 32:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_0_32[0], "hits")
+    print("Se tuvieron ", HMR_1_0_32[1], "misses")
+    print("Se tuvieron ", HMR_1_0_32[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_0_32))
 
     #Tamaño 64
     data = 64, 64, 16, 65536
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_1_0_64, total_time_funct_1_0_64 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 64:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_0_64[0], "hits")
+    print("Se tuvieron ", HMR_1_0_64[1], "misses")
+    print("Se tuvieron ", HMR_1_0_64[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_0_64))
 
     #Tamaño 128KB
     data = 128000, 64, 16, 131072000
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_1_0_128, total_time_funct_1_0_128 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Tamaño 128KB:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_1_0_128[0], "hits")
+    print("Se tuvieron ", HMR_1_0_128[1], "misses")
+    print("Se tuvieron ", HMR_1_0_128[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_0_128))
 
 # Prueba 2. Tamaño 32KB, línea de cache 64 bytes. Barrido de asociatividad: 4, 8, 16.
     print("Prueba 2. Tamaño 32KB, línea de cache 64 bytes. Barrido de asociatividad: 4, 8, 16.")
@@ -297,40 +298,40 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_2_1_4, total_time_funct_2_1_4 = processTrace(cache,data, address_bits, way_size, True)
     
     print("Con optimización - Way 4:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_1_4[0], "hits")
+    print("Se tuvieron ", HMR_2_1_4[1], "misses")
+    print("Se tuvieron ", HMR_2_1_4[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_1_4))
 
     #Way 8
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_2_1_8, total_time_funct_2_1_8 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Way 8:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_1_8[0], "hits")
+    print("Se tuvieron ", HMR_2_1_8[1], "misses")
+    print("Se tuvieron ", HMR_2_1_8[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_1_8))
 
     #Way 16
     data = 32768, 64, 16, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_2_1_16, total_time_funct_2_1_16 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Way 16:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_1_16[0], "hits")
+    print("Se tuvieron ", HMR_2_1_16[1], "misses")
+    print("Se tuvieron ", HMR_2_1_16[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_1_16))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -339,39 +340,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_2_0_4, total_time_funct_2_0_4 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 4:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_0_4[0], "hits")
+    print("Se tuvieron ", HMR_2_0_4[1], "misses")
+    print("Se tuvieron ", HMR_2_0_4[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_0_4))
 
     #Way 8
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_2_0_8, total_time_funct_2_0_8 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 8:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_0_8[0], "hits")
+    print("Se tuvieron ", HMR_2_0_8[1], "misses")
+    print("Se tuvieron ", HMR_2_0_8[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_0_8))
 
     #Way 16
     data = 32768, 64, 16, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_2_0_16, total_time_funct_2_0_16 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Way 16:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_2_0_16[0], "hits")
+    print("Se tuvieron ", HMR_2_0_16[1], "misses")
+    print("Se tuvieron ", HMR_2_0_16[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_0_16))
 
 # Prueba 3. Tamaño 32KB, asociatividad 8 ways. Barrido de línea de cache: 32, 64 y 128 bytes
     print("Prueba 3. Tamaño 32KB, asociatividad 8 ways. Barrido de línea de cache: 32, 64 y 128 bytes.")
@@ -383,39 +384,39 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_3_1_32, total_time_funct_3_1_32 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 32:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_1_32[0], "hits")
+    print("Se tuvieron ", HMR_3_1_32[1], "misses")
+    print("Se tuvieron ", HMR_3_1_32[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_1_32))
 
     #Linea de cache 64
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_3_1_64, total_time_funct_3_1_64 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 64:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_1_64[0], "hits")
+    print("Se tuvieron ", HMR_3_1_64[1], "misses")
+    print("Se tuvieron ", HMR_3_1_64[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_1_64))
 
     #Linea de cache 128
     data = 32768, 128, 8, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, True)
+    HMR_3_1_128, total_time_funct_3_1_128 = processTrace(cache,data, address_bits, way_size, True)
     print("Con optimización - Línea de cache 128:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_1_128[0], "hits")
+    print("Se tuvieron ", HMR_3_1_128[1], "misses")
+    print("Se tuvieron ", HMR_3_1_128[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_1_128))
 
 # (SIN OPTIMIZACIÓN).
 
@@ -424,37 +425,190 @@ if __name__ == '__main__':
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_3_0_32, total_time_funct_3_0_32 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 32:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_0_32[0], "hits")
+    print("Se tuvieron ", HMR_3_0_32[1], "misses")
+    print("Se tuvieron ", HMR_3_0_32[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_32))
 
     #Linea de cache 64
     data = 32768, 64, 8, 16777216
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_3_0_64, total_time_funct_3_0_64 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 64:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_0_64[0], "hits")
+    print("Se tuvieron ", HMR_3_0_64[1], "misses")
+    print("Se tuvieron ", HMR_3_0_64[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_64))
 
     #Linea de cache 128
     data = 32768, 128, 8, 33554432
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
-    HMR, total_time_funct = processTrace(cache,data, address_bits, way_size, False)
+    HMR_3_0_128, total_time_funct_3_0_128 = processTrace(cache,data, address_bits, way_size, False)
     print("Sin optimización - Línea de cache 128:")
-    print("Se tuvieron ", HMR[0], "hits")
-    print("Se tuvieron ", HMR[1], "misses")
-    print("Se tuvieron ", HMR[2], "reemplazos")
+    print("Se tuvieron ", HMR_3_0_128[0], "hits")
+    print("Se tuvieron ", HMR_3_0_128[1], "misses")
+    print("Se tuvieron ", HMR_3_0_128[2], "reemplazos")
     print(np.shape(cache))
-    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct))
+    print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_128))
     
+    # Datos
+    tamaño_cache = ['32', '64', '128KB']
+    hits_optimizado = [HMR_1_1_32[0], HMR_1_1_64[0], HMR_1_1_128[0]]
+    misses_optimizado = [HMR_1_1_32[1], HMR_1_1_64[1], HMR_1_1_128[1]]
+    tiempo_optimizado = [total_time_funct_1_1_32, total_time_funct_1_1_64, total_time_funct_1_1_128]
+
+    hits_sin_optimizacion = [HMR_1_0_32[0], HMR_1_0_64[0], HMR_1_0_128[0]]
+    misses_sin_optimizacion = [HMR_1_0_32[1], HMR_1_0_64[1], HMR_1_0_128[1]]
+    tiempo_sin_optimizacion = [total_time_funct_1_0_32, total_time_funct_1_0_64, total_time_funct_1_0_128]
+
+    # Crear subplots
+    fig, axs = plt.subplots(3, 1, figsize=(8, 12))
+
+    # Gráfico de Hits y Misses
+    axs[0].bar(np.arange(len(tamaño_cache)) - 0.2, hits_optimizado, width=0.4, label='Con optimización - Hits')
+    axs[0].bar(np.arange(len(tamaño_cache)) + 0.2, misses_optimizado, width=0.4, label='Con optimización - Misses')
+    axs[0].bar(np.arange(len(tamaño_cache)) - 0.2, hits_sin_optimizacion, width=0.4, label='Sin optimización - Hits', alpha=0.5)
+    axs[0].bar(np.arange(len(tamaño_cache)) + 0.2, misses_sin_optimizacion, width=0.4, label='Sin optimización - Misses', alpha=0.5)
+    axs[0].set_xticks(np.arange(len(tamaño_cache)))
+    axs[0].set_xticklabels(tamaño_cache)
+    axs[0].set_ylabel('Cantidad')
+    axs[0].set_title('Hits y Misses')
+    axs[0].legend()
+
+    # Gráfico de Tiempo
+    axs[1].bar(np.arange(len(tamaño_cache)) - 0.2, tiempo_optimizado, width=0.4, label='Con optimización')
+    axs[1].bar(np.arange(len(tamaño_cache)) + 0.2, tiempo_sin_optimizacion, width=0.4, label='Sin optimización')
+    axs[1].set_xticks(np.arange(len(tamaño_cache)))
+    axs[1].set_xticklabels(tamaño_cache)
+    axs[1].set_ylabel('Tiempo (s)')
+    axs[1].set_title('Tiempo Transcurrido')
+    axs[1].legend()
+
+    # Gráfico de Reemplazos
+    axs[2].bar(np.arange(len(tamaño_cache)) - 0.2, [HMR_1_1_32[2], HMR_1_1_64[2], HMR_1_1_128[2]], width=0.4, label='Con optimización - Reemplazos')
+    axs[2].bar(np.arange(len(tamaño_cache)) + 0.2, [HMR_1_0_32[2], HMR_1_0_64[2], HMR_1_0_128[2]], width=0.4, label='Sin optimización - Reemplazos', alpha=0.5)
+    axs[2].set_xticks(np.arange(len(tamaño_cache)))
+    axs[2].set_xticklabels(tamaño_cache)
+    axs[2].set_ylabel('Cantidad')
+    axs[2].set_title('Reemplazos')
+    axs[2].legend()
+
+    # Ajustes finales
+    plt.tight_layout()
+    plt.show()
+
+    import matplotlib.pyplot as plt
+
+# Datos organizados para la prueba 2
+    #tamaño_cache = 32000
+    #linea_cache = 64
+    barridos_asociatividad = [4, 8, 16]
+
+    hits_con_opt = [HMR_2_1_4[0], HMR_2_1_8[0], HMR_2_1_16[0]]
+    misses_con_opt = [HMR_2_1_4[1], HMR_2_1_8[1], HMR_2_1_16[1]]
+    reemplazos_con_opt = [HMR_2_1_4[2], HMR_2_1_8[2], HMR_2_1_16[2]]
+    tiempo_con_opt = [total_time_funct_2_1_4, total_time_funct_2_1_8, total_time_funct_2_1_16]
+
+    hits_sin_opt = [HMR_2_0_4[0], HMR_2_0_8[0], HMR_2_0_16[0]]
+    misses_sin_opt = [HMR_2_0_4[1], HMR_2_0_8[1], HMR_2_0_16[1]]
+    reemplazos_sin_opt = [HMR_2_0_4[2], HMR_2_0_8[2], HMR_2_0_16[2]]
+    tiempo_sin_opt = [total_time_funct_2_0_4, total_time_funct_2_0_8, total_time_funct_2_0_16]
+
+    # Crear gráficas tabulares
+    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+    # Gráfica de hits
+    axs[0, 0].bar(barridos_asociatividad, hits_con_opt, width=0.4, label='Con Optimización')
+    axs[0, 0].bar([b + 0.4 for b in barridos_asociatividad], hits_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[0, 0].set_title('Hits')
+    axs[0, 0].set_xticks([b + 0.2 for b in barridos_asociatividad])
+    axs[0, 0].set_xticklabels(barridos_asociatividad)
+    axs[0, 0].legend()
+
+    # Gráfica de misses
+    axs[0, 1].bar(barridos_asociatividad, misses_con_opt, width=0.4, label='Con Optimización')
+    axs[0, 1].bar([b + 0.4 for b in barridos_asociatividad], misses_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[0, 1].set_title('Misses')
+    axs[0, 1].set_xticks([b + 0.2 for b in barridos_asociatividad])
+    axs[0, 1].set_xticklabels(barridos_asociatividad)
+    axs[0, 1].legend()
+
+    # Gráfica de reemplazos
+    axs[1, 0].bar(barridos_asociatividad, reemplazos_con_opt, width=0.4, label='Con Optimización')
+    axs[1, 0].bar([b + 0.4 for b in barridos_asociatividad], reemplazos_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[1, 0].set_title('Reemplazos')
+    axs[1, 0].set_xticks([b + 0.2 for b in barridos_asociatividad])
+    axs[1, 0].set_xticklabels(barridos_asociatividad)
+    axs[1, 0].legend()
+
+    # Gráfica de tiempo
+    axs[1, 1].bar(barridos_asociatividad, tiempo_con_opt, width=0.4, label='Con Optimización')
+    axs[1, 1].bar([b + 0.4 for b in barridos_asociatividad], tiempo_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[1, 1].set_title('Tiempo Transcurrido (s)')
+    axs[1, 1].set_xticks([b + 0.2 for b in barridos_asociatividad])
+    axs[1, 1].set_xticklabels(barridos_asociatividad)
+    axs[1, 1].legend()
+
+    plt.tight_layout()
+    plt.show()
+
+    # Datos organizados para la tercera prueba
+    #tamaño_cache = 32
+    #asociatividad = 8
+    barridos_linea_cache = [32, 64, 128]
+
+    hits_con_opt = [HMR_3_1_32[0], HMR_3_1_64[0], HMR_3_1_128[0]]
+    misses_con_opt = [HMR_3_1_32[1], HMR_3_1_64[1], HMR_3_1_128[1]]
+    reemplazos_con_opt = [HMR_3_1_32[2], HMR_3_1_64[2], HMR_3_1_128[2]]
+    tiempo_con_opt = [total_time_funct_3_1_32, total_time_funct_3_1_64, total_time_funct_3_1_128]
+
+    hits_sin_opt = [HMR_3_0_32[0], HMR_3_0_64[0], HMR_3_0_128[0]]
+    misses_sin_opt = [HMR_3_0_32[1], HMR_3_0_64[1], HMR_3_0_128[1]]
+    reemplazos_sin_opt = [HMR_3_0_32[2], HMR_3_0_64[2], HMR_3_0_128[2]]
+    tiempo_sin_opt = [total_time_funct_3_0_32, total_time_funct_3_0_64, total_time_funct_3_0_128]
+
+    # Crear gráficas tabulares
+    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+    # Gráfica de hits
+    axs[0, 0].bar(barridos_linea_cache, hits_con_opt, width=0.4, label='Con Optimización')
+    axs[0, 0].bar([b + 0.4 for b in barridos_linea_cache], hits_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[0, 0].set_title('Hits')
+    axs[0, 0].set_xticks([b + 0.2 for b in barridos_linea_cache])
+    axs[0, 0].set_xticklabels(barridos_linea_cache)
+    axs[0, 0].legend()
+
+    # Gráfica de misses
+    axs[0, 1].bar(barridos_linea_cache, misses_con_opt, width=0.4, label='Con Optimización')
+    axs[0, 1].bar([b + 0.4 for b in barridos_linea_cache], misses_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[0, 1].set_title('Misses')
+    axs[0, 1].set_xticks([b + 0.2 for b in barridos_linea_cache])
+    axs[0, 1].set_xticklabels(barridos_linea_cache)
+    axs[0, 1].legend()
+
+    # Gráfica de reemplazos
+    axs[1, 0].bar(barridos_linea_cache, reemplazos_con_opt, width=0.4, label='Con Optimización')
+    axs[1, 0].bar([b + 0.4 for b in barridos_linea_cache], reemplazos_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[1, 0].set_title('Reemplazos')
+    axs[1, 0].set_xticks([b + 0.2 for b in barridos_linea_cache])
+    axs[1, 0].set_xticklabels(barridos_linea_cache)
+    axs[1, 0].legend()
+
+    # Gráfica de tiempo
+    axs[1, 1].bar(barridos_linea_cache, tiempo_con_opt, width=0.4, label='Con Optimización')
+    axs[1, 1].bar([b + 0.4 for b in barridos_linea_cache], tiempo_sin_opt, width=0.4, label='Sin Optimización', color='orange')
+    axs[1, 1].set_title('Tiempo Transcurrido (s)')
+    axs[1, 1].set_xticks([b + 0.2 for b in barridos_linea_cache])
+    axs[1, 1].set_xticklabels(barridos_linea_cache)
+    axs[1, 1].legend()
+
+    plt.tight_layout()
+    plt.show()

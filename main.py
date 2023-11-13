@@ -48,7 +48,7 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                 #print(i)
                 if (i % 500000 == 0):
                     print(f"Counter: {i}")
-                if (i < 10000):
+                if (i < 10e38):
                     #print(line)
                     line_splitted = line.split()
                     instruction_type = int(line_splitted[1])  # tipo de instrucción: 0 = load, 1 = store

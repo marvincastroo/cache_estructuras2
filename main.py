@@ -209,7 +209,7 @@ if __name__ == '__main__':
 
     # (CON OPTIMIZACIÓN).
     #Tamaño 32
-    data = 32, 64, 16, 32768
+    data = 64, 32, 16, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -236,7 +236,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_1_64))
 
     #Tamaño 128KB
-    data = 128000, 64, 16, 131072000
+    data = 64, 128, 16, 131072
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -251,7 +251,7 @@ if __name__ == '__main__':
 # (SIN OPTIMIZACIÓN).
 
     #Tamaño 32
-    data = 32, 64, 16, 32768
+    data = 64, 32, 16, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -277,7 +277,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_1_0_64))
 
     #Tamaño 128KB
-    data = 128000, 64, 16, 131072000
+    data = 64, 128, 16, 131072
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -294,7 +294,7 @@ if __name__ == '__main__':
 
     # (CON OPTIMIZACIÓN).
     #Way 4
-    data = 32768, 64, 4, 8388608
+    data = 64, 32, 4, 8192
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
@@ -308,7 +308,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_1_4))
 
     #Way 8
-    data = 32768, 64, 8, 16777216
+    data = 64, 32, 8, 16384
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_1_8))
 
     #Way 16
-    data = 32768, 64, 16, 33554432
+    data = 64, 32, 16, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -336,7 +336,7 @@ if __name__ == '__main__':
 # (SIN OPTIMIZACIÓN).
 
     #Way 4
-    data = 32768, 64, 4, 8388608
+    data = 64, 32, 4, 8192
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 4
@@ -349,7 +349,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_0_4))
 
     #Way 8
-    data = 32768, 64, 8, 16777216
+    data = 64, 32, 8, 16384
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -362,7 +362,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_2_0_8))
 
     #Way 16
-    data = 32768, 64, 16, 33554432
+    data = 64, 32, 16, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 16
@@ -380,7 +380,7 @@ if __name__ == '__main__':
 # (CON OPTIMIZACIÓN).
 
     #Linea de cache 32
-    data = 32768, 32, 8, 8388608
+    data = 32, 32, 8, 8192
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -393,7 +393,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_1_32))
 
     #Linea de cache 64
-    data = 32768, 64, 8, 16777216
+    data = 64, 32, 8, 16384
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -406,7 +406,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_1_64))
 
     #Linea de cache 128
-    data = 32768, 128, 8, 33554432
+    data = 128, 32, 8, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -421,7 +421,7 @@ if __name__ == '__main__':
 # (SIN OPTIMIZACIÓN).
 
     #Linea de cache 32
-    data = 32768, 32, 8, 8388608
+    data = 32, 32, 8, 8192
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -434,7 +434,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_32))
 
     #Linea de cache 64
-    data = 32768, 64, 8, 16777216
+    data = 64, 32, 8, 16384
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -447,7 +447,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_64))
 
     #Linea de cache 128
-    data = 32768, 128, 8, 33554432
+    data = 128, 32, 8, 32768
     cache = buildCache(data)
     address_bits = tagBlockBits(data)
     way_size = 8
@@ -460,7 +460,7 @@ if __name__ == '__main__':
     print("Tiempo Transcurrido: {:.2f} s".format(total_time_funct_3_0_128))
     
     # Datos
-    tamaño_cache = ['32', '64', '128KB']
+    tamaño_cache = ['32KB', '64KB', '128KB']
     hits_optimizado = [HMR_1_1_32[0], HMR_1_1_64[0], HMR_1_1_128[0]]
     misses_optimizado = [HMR_1_1_32[1], HMR_1_1_64[1], HMR_1_1_128[1]]
     tiempo_optimizado = [total_time_funct_1_1_32, total_time_funct_1_1_64, total_time_funct_1_1_128]

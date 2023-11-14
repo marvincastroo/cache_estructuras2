@@ -122,18 +122,15 @@ def processTrace(cache, data, address_bits, way_size, optimization=False):
                                         queue_LRU.append(((queue_LRU[lru_index])[0], (queue_LRU[lru_index])[1]))    # pongo nueva escritura al final
                                         queue_LRU.pop(lru_index)   
                                     else:
-                                        way_predictor = way_predictor + 1
+                                        way_predictor += 1
                                         if way_predictor >= way_size:
                                             parar1 = True
                                             parar2 = True
                                             hit = 0
-                                            way_iterador = way_predictor = 0
                         hits += (instruction_quant - 1) + hit
                         if(hit == 0):
-                            misses += 1
-                               
+                            misses += 1      
                     while not parar:
-
                         # se comprobo que el elemento no existe en el cache, por lo tanto hay que escribirlo
                         if cache[index_number][way_iterador*linea + 1 : ((way_iterador + 1) * linea) - 1 ].all() == 0:
                             cache[index_number][way_iterador*linea] = tag_number        # se escribe tag en cache
